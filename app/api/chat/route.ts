@@ -81,7 +81,7 @@ export async function POST(request: Request) {
     }
 
     const context = retrievedChunks
-      .map((chunk, index) => {
+      .map((chunk: any, index: number) => {
         const payload = chunk.payload as { text?: string; fileName?: string };
         return `Chunk ${index + 1} (${payload.fileName ?? "document"}):\n${payload.text ?? ""}`;
       })
@@ -104,7 +104,7 @@ export async function POST(request: Request) {
 
     const historyText = recentMessages
       .reverse()
-      .map((entry) => `${entry.role.toUpperCase()}: ${entry.content}`)
+      .map((entry: { role: string; content: string }) => `${entry.role.toUpperCase()}: ${entry.content}`)
       .join("\n");
 
     const groq = new Groq({ apiKey: process.env.LAW_AI });

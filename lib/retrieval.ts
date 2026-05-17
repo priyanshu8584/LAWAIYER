@@ -12,7 +12,7 @@ export async function retrieveRelevantChunks(query: string) {
     with_payload: true,
   });
 
-  return results.map((result) => ({
+  return results.map((result: any) => ({
     id: String(result.id),
     score: result.score,
     payload: result.payload,
