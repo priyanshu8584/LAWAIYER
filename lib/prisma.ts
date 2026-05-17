@@ -3,25 +3,25 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
 declare global {
+  // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
 
-const connectionString = process.env.DATABASE_URL;
+function createPrismaClient(): PrismaClient {
+  const connectionString = process.env.DATABASE_URL;
 
-if (!connectionString) {
-  throw new Error("DATABASE_URL is missing.");
-}
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is missing.");
+  }
 
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaPg(pool);
 
-export const prisma =
-  global.prisma ??
-  new PrismaClient({
+  return new PrismaClient({
     adapter,
     log: ["error"],
   });
-
-if (process.env.NODE_ENV !== "production") {
-  global.prisma = prisma;
 }
+
+export const prisma: PrismaClient =
+  global.prisma ?? (global.prisma = createPrismaClient());
