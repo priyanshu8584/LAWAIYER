@@ -20,12 +20,12 @@ export function MessageBubble({ content, role }: MessageBubbleProps) {
             AI
           </div>
         )}
-        
+
         <div
-          className={`text-base leading-7 text-zinc-100 ${
+          className={`break-words whitespace-pre-wrap text-base leading-7 text-zinc-100 rounded-3xl px-5 py-4 ${
             isAssistant
-              ? "max-w-[calc(100%-3rem)] py-1.5"
-              : "max-w-[85%] rounded-3xl bg-[#2f2f2f] px-5 py-2.5"
+              ? "max-w-full md:max-w-[calc(100%-3rem)] bg-zinc-900/90"
+              : "max-w-[85%] md:max-w-[75%] bg-[#2f2f2f]"
           }`}
         >
           {content}
